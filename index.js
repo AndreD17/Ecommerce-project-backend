@@ -13,45 +13,49 @@ import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
+
+// ✅ Define __dirname properly for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
+    "https://your-frontend-domain.onrender.com",
+    "https://your-admin-domain.onrender.com"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static images
+// ✅ Serve uploaded images
 app.use("/images", express.static(path.join(__dirname, "upload/images")));
 
-
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// ✅ MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// Routes (no /api prefix)
+// ✅ API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 
-// Test route
+// ✅ Test route
 app.get("/", (req, res) => res.send("Ecommerce API is running 🚀"));
 
-// Global error handler
+// ✅ Global error handler
 app.use((err, req, res, next) => {
   const statusCode = err.status || 500;
   const message = err.message || "Internal Server Error";
   res.status(statusCode).json({ success: false, statusCode, message });
 });
 
-// Start server
+// ✅ Start server
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
