@@ -24,8 +24,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://your-frontend-domain.onrender.com",
-    "https://your-admin-domain.onrender.com"
+    "https://ecommerce-project-admin-uuwx.onrender.com/"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"]
