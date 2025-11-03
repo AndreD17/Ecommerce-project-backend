@@ -24,10 +24,10 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://ecommerce-project-admin-uuwx.onrender.com/"
+    "https://ecommerce-project-admin-uuwx.onrender.com"
   ],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"]
+  methods: ["GET", "POST", "DELETE"]
 }));
 
 app.use(express.json());
