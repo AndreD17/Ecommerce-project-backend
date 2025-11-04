@@ -33,21 +33,21 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Serve uploaded images
+
 app.use("/images", express.static(path.join(__dirname, "upload/images")));
 
-// ✅ MongoDB connection
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// ✅ API Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 
 // ✅ Test route
-app.get("/", (req, res) => res.send("Ecommerce API is running 🚀"));
+app.get("/", (req, res) => res.send("Ecommerce API is running 🚀🚀🚀🚀"));
 
 // ✅ Global error handler
 app.use((err, req, res, next) => {
@@ -57,4 +57,4 @@ app.use((err, req, res, next) => {
 });
 
 // ✅ Start server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}...`));

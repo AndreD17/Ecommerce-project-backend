@@ -1,6 +1,6 @@
 import Product from "../models/Product.js";
 
-// Add product
+
 export const addProduct = async (req, res) => {
   try {
     const products = await Product.find({});
@@ -22,7 +22,6 @@ export const addProduct = async (req, res) => {
   }
 };
 
-// Get all products
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({}, "-_id id name image category new_price old_price available");
