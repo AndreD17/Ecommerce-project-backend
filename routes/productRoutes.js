@@ -12,21 +12,31 @@ import path from "path";
 
 const router = express.Router();
 
-// Multer setup
+// ✅ Multer setup
 const storage = multer.diskStorage({
   destination: "./upload/images",
-  filename: (req, file, cb) => cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+  filename: (req, file, cb) =>
+    cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
 });
 const upload = multer({ storage });
 
+// ✅ Upload route with dynamic base URL detection
 router.post("/upload", upload.single("product"), (req, res) => {
-  if (!req.file) return res.status(400).json({ success: false, message: "No file uploaded" });
+  if (!req.file)
+    return res.status(400).json({ success: false, message: "No file uploaded" });
+
+  // ✅ Automatically detect correct domain (Render, local, etc.)
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+  const imageUrl = `${baseUrl}/images/${req.file.filename}`;
+
+  console.log("✅ Uploaded Image URL:", imageUrl);
 
   res.json({
     success: true,
-    image_url: `${process.env.BASE_URL}/images/${req.file.filename}`,
+    image_url: imageUrl
   });
 });
+
 
 router.post("/addproduct", addProduct);
 router.get("/allproducts", getAllProducts);
